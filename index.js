@@ -57,7 +57,7 @@ chrome.runtime.onMessage.addListener(
           padding: 24px 0px 12px 0;
           display: flex;
           border-radius: 16px;
-          z-index: 10;
+          z-index: 9999;
           flex-direction: column;
         }
         .ytdownloaderpopup h1, .ytdownloaderpopup > span {

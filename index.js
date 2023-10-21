@@ -1,5 +1,4 @@
-// const YoutubeDownloaderAPIURL = 'YOUR_API_URL'
-const YoutubeDownloaderAPIURL = 'https://ytdownloader.hmdnjf.repl.co/'
+const YoutubeDownloaderAPIURL = 'YOUR_API_URL'
 
 const Styles = `
 .ytdownloaderbtn {

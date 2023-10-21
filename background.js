@@ -5,10 +5,10 @@ function getTabInfo(tabId) {
     if (lastUrl != tab.url || lastTitle != tab.title) {
       console.log(lastUrl = tab.url, lastTitle = tab.title);
 
-      if (tab.url.match(/youtube.com\/watch\?v=(\w+)/)) {
+      if (tab.url.match(/youtube.com\/watch\?v=([^&]+)/)) {
         chrome.tabs.sendMessage(tabId, {
           message: 'youtube_url',
-          url: tab.url.match(/youtube.com\/watch\?v=(\w+)/)[1]
+          url: tab.url.match(/youtube.com\/watch\?v=([^&]+)/)[1]
         })
       }
     }

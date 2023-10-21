@@ -1,4 +1,5 @@
-const YoutubeDownloaderAPIURL = 'YOUR_API_URL'
+// const YoutubeDownloaderAPIURL = 'YOUR_API_URL'
+const YoutubeDownloaderAPIURL = 'https://ytdownloader.hmdnjf.repl.co/'
 
 const Styles = `
 .ytdownloaderbtn {
@@ -166,12 +167,19 @@ chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
     // listen for messages sent from background.js
     if (request.message === 'youtube_url') {
-      window.addEventListener('load', () => HandleYT(request.url))
+      let interval = setInterval(() => {
+        console.log('aha')
+        HandleYT(request.url, interval);
+      }, 2000);
+      window.addEventListener('load', () => {
+        HandleYT(request.url);
+      })
     }
   });
 
-function HandleYT(videoId) {
+function HandleYT(videoId, interval) {
   if (!document.querySelector('.ytdownloaderbtn')) {
+    interval && clearInterval(interval)
     var styleElem = document.head.appendChild(document.createElement("style"));
 
     styleElem.innerHTML = Styles;
@@ -185,7 +193,7 @@ function HandleYT(videoId) {
     document.querySelector('#flexible-item-buttons').appendChild(a)
 
     a.addEventListener('click', () => {
-      fetch(`${YoutubeDownloaderAPIURL}?id=${videoId}`, { mode: 'cors' })
+      fetch(`${YoutubeDownloaderAPIURL}?id=${encodeURI(videoId)}`, { mode: 'cors' })
         .then((response) => response.json()) // Parse the response as JSON
         .then((result) => {
           let popup = document.createElement('div')
@@ -246,6 +254,7 @@ function HandleYT(videoId) {
         }).catch((error) => console.error(error)); // Handle errors
     })
   } else {
+    interval && clearInterval(interval)
     document.querySelector('#flexible-item-buttons').children[0].style.display = 'none'
   }
 }

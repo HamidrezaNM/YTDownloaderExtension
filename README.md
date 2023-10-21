@@ -14,6 +14,6 @@ Download the Extension file from [releases](https://github.com/HamidrezaNM/YTDow
 
 Go to Extensions page
 
-From the settings cog, open Install Add-on From File
+From the settings cog, open `Install Add-on From File`
 
-Select Extension file, then when prompted click Add
+Select Extension file, then when prompted click `Add`

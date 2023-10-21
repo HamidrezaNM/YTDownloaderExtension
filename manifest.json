@@ -1,17 +1,20 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "YT Downloader",
   "version": "1.0",
   "description": "This is a description of my extension",
   "permissions": [
     "tabs",
-    "webNavigation"
+    "webNavigation",
+    "*://ytdownloader.hmdnjf.repl.co/*"
   ],
   "icons": {
     "48": "icons/icon48.png"
   },
   "background": {
-    "service_worker": "background.js"
+    "scripts": [
+      "background.js"
+    ]
   },
   "content_scripts": [
     {

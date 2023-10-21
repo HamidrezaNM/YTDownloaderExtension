@@ -168,8 +168,8 @@ tp-yt-iron-overlay-backdrop {
   display: none!important;
 }`;
 
-chrome.runtime.onMessage.addListener(
-  function (request, sender, sendResponse) {
+browser.runtime.onMessage.addListener(
+  function (request) {
     // listen for messages sent from background.js
     if (request.message === 'youtube_url') {
       let interval = setInterval(() => {
@@ -180,6 +180,7 @@ chrome.runtime.onMessage.addListener(
         HandleYT(request.url);
       })
     }
+    return Promise.resolve({ response: "Hi from content script" });
   });
 
 function HandleYT(videoId, interval) {
@@ -189,24 +190,17 @@ function HandleYT(videoId, interval) {
 
     styleElem.innerHTML = Styles;
 
-    if (!document.querySelector('#actions #flexible-item-buttons ytd-download-button-renderer') && !document.querySelector('ytd-popup-container tp-yt-iron-dropdown #primary-entry')) {
-      let a = document.createElement('div')
-      a.innerHTML = `<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgLTk2MCA5NjAgOTYwIiB3aWR0aD0iMjAiPjxwYXRoIGQ9Ik00NzkuOC0zNjQuMDc3cS01LjY2MiAwLTEwLjQyMy0yLjExNS00Ljc2Mi0yLjExNi04Ljk5Mi02LjM0NmwtMTAyLjc3LTEwMi43N3EtNC44NDYtNC43NTUtNS4xMTUtMTEuMjI0LS4yNy02LjQ2OCA1LjYzNy0xMi4wODQgNi4wOTQtNS42MTUgMTEuNzQ3LTUuMjMxIDUuNjU0LjM4NSAxMS4yNyA2LjAwMUw0NjQtNDE0di0zNDZxMC02LjgzOSA0LjUyLTExLjQxOVE0NzMuMDQtNzc2IDQ3OS43ODktNzc2cTYuNzUgMCAxMS40OCA0LjU4MVE0OTYtNzY2LjgzOSA0OTYtNzYwdjM0Nmw4My44NDYtODMuODQ2cTQuNTEzLTQuODQ3IDEwLjcxOC01LjExNiA2LjIwNS0uMjY5IDEyLjI5OSA1LjM0NiA1LjkwNyA1LjYxNiA1LjUyMiAxMS42NTQtLjM4NSA2LjAzOS02IDExLjY1NGwtMTAyLjc3IDEwMS43N3EtNC42MyA0LjIzLTkuMzkyIDYuMzQ2LTQuNzYxIDIuMTE1LTEwLjQyMyAyLjExNVpNMjg4LjMzMi0yMzJRMjY0LTIzMiAyNDgtMjQ4LjE1dC0xNi00MC40NjV2LTMyLjkyM3EwLTYuODM5IDQuNTItMTEuNDIgNC41Mi00LjU4IDExLjI2OS00LjU4IDYuNzQ5IDAgMTEuNDggNC41OCA0LjczMSA0LjU4MSA0LjczMSAxMS40MnYzMi45MjNxMCA5LjIzIDcuNjkyIDE2LjkyM1EyNzkuMzg1LTI2NCAyODguNjE1LTI2NGgzODIuNzdxOS4yMyAwIDE2LjkyMy03LjY5MlE2OTYtMjc5LjM4NSA2OTYtMjg4LjYxNXYtMzIuOTIzcTAtNi44MzkgNC41Mi0xMS40MiA0LjUyMS00LjU4IDExLjI3LTQuNTh0MTEuNDc5IDQuNThxNC43MzEgNC41ODEgNC43MzEgMTEuNDJ2MzIuOTIzcTAgMjQuMzE1LTE2LjE2MiA0MC40NjVRNjk1LjY3Ni0yMzIgNjcxLjM0NC0yMzJIMjg4LjMzMloiLz48L3N2Zz4="><span>Download</span>`
-      a.className = "ytdownloaderbtn"
-      document.querySelector('#actions #flexible-item-buttons').childNodes.forEach((item) => {
-        item.style.display = 'none'
-      })
+    let a = document.createElement('div')
+    a.innerHTML = `<img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgLTk2MCA5NjAgOTYwIiB3aWR0aD0iMjAiPjxwYXRoIGQ9Ik00NzkuOC0zNjQuMDc3cS01LjY2MiAwLTEwLjQyMy0yLjExNS00Ljc2Mi0yLjExNi04Ljk5Mi02LjM0NmwtMTAyLjc3LTEwMi43N3EtNC44NDYtNC43NTUtNS4xMTUtMTEuMjI0LS4yNy02LjQ2OCA1LjYzNy0xMi4wODQgNi4wOTQtNS42MTUgMTEuNzQ3LTUuMjMxIDUuNjU0LjM4NSAxMS4yNyA2LjAwMUw0NjQtNDE0di0zNDZxMC02LjgzOSA0LjUyLTExLjQxOVE0NzMuMDQtNzc2IDQ3OS43ODktNzc2cTYuNzUgMCAxMS40OCA0LjU4MVE0OTYtNzY2LjgzOSA0OTYtNzYwdjM0Nmw4My44NDYtODMuODQ2cTQuNTEzLTQuODQ3IDEwLjcxOC01LjExNiA2LjIwNS0uMjY5IDEyLjI5OSA1LjM0NiA1LjkwNyA1LjYxNiA1LjUyMiAxMS42NTQtLjM4NSA2LjAzOS02IDExLjY1NGwtMTAyLjc3IDEwMS43N3EtNC42MyA0LjIzLTkuMzkyIDYuMzQ2LTQuNzYxIDIuMTE1LTEwLjQyMyAyLjExNVpNMjg4LjMzMi0yMzJRMjY0LTIzMiAyNDgtMjQ4LjE1dC0xNi00MC40NjV2LTMyLjkyM3EwLTYuODM5IDQuNTItMTEuNDIgNC41Mi00LjU4IDExLjI2OS00LjU4IDYuNzQ5IDAgMTEuNDggNC41OCA0LjczMSA0LjU4MSA0LjczMSAxMS40MnYzMi45MjNxMCA5LjIzIDcuNjkyIDE2LjkyM1EyNzkuMzg1LTI2NCAyODguNjE1LTI2NGgzODIuNzdxOS4yMyAwIDE2LjkyMy03LjY5MlE2OTYtMjc5LjM4NSA2OTYtMjg4LjYxNXYtMzIuOTIzcTAtNi44MzkgNC41Mi0xMS40MiA0LjUyMS00LjU4IDExLjI3LTQuNTh0MTEuNDc5IDQuNThxNC43MzEgNC41ODEgNC43MzEgMTEuNDJ2MzIuOTIzcTAgMjQuMzE1LTE2LjE2MiA0MC40NjVRNjk1LjY3Ni0yMzIgNjcxLjM0NC0yMzJIMjg4LjMzMloiLz48L3N2Zz4="><span>Download</span>`
+    a.className = "ytdownloaderbtn"
+    document.querySelector('#actions #flexible-item-buttons').childNodes.forEach((item) => {
+      item.style.display = 'none'
+    })
 
-      document.querySelector('#actions #flexible-item-buttons').appendChild(a)
-      a.addEventListener('click', () => handleDownloadClick())
-    } else {
-      document.querySelector('ytd-popup-container tp-yt-iron-dropdown #primary-entry') && (document.querySelector('ytd-popup-container tp-yt-iron-dropdown #primary-entry').onclick = (e) => { e.preventDefault(); handleDownloadClick() })
-      document.querySelector('#actions #flexible-item-buttons ytd-download-button-renderer button').onclick = (e) => { e.preventDefault(); handleDownloadClick() }
-    }
+    document.querySelector('#actions #flexible-item-buttons').appendChild(a)
+    a.addEventListener('click', () => handleDownloadClick())
   } else {
     interval && clearInterval(interval)
-    document.querySelector('ytd-popup-container tp-yt-iron-dropdown #primary-entry') && (document.querySelector('ytd-popup-container tp-yt-iron-dropdown #primary-entry').onclick = (e) => { e.preventDefault(); handleDownloadClick() })
-    document.querySelector('#actions #flexible-item-buttons').querySelector('ytd-download-button-renderer button').onclick = (e) => { e.preventDefault(); handleDownloadClick() }
   }
 
   function handleDownloadClick() {
@@ -218,18 +212,18 @@ function HandleYT(videoId, interval) {
         bg.className = '_bg_'
         popup.className = 'ytdownloaderpopup'
         popup.innerHTML = `<h1>YT Downloader</h1>
-                         <span class="_title_">Download this video for Free</span>
-                         <span>Enjoy watching videos offline.</span>
-                         <!-- RADIO BUTTONS -->
-                         <div class="formats"></div>
-                         <div class="btns">
-                           <div id="_download_" class="ytdownloaderbtn _btn_ _filledbtn_">
-                             <span>Download</span>
-                           </div>
-                           <div id="_cancel_" class="ytdownloaderbtn _btn_ _textbtn_">
-                             <span>Cancel</span>
-                           </div>
-                         </div>`
+                           <span class="_title_">Download this video for Free</span>
+                           <span>Enjoy watching videos offline.</span>
+                           <!-- RADIO BUTTONS -->
+                           <div class="formats"></div>
+                           <div class="btns">
+                             <div id="_download_" class="ytdownloaderbtn _btn_ _filledbtn_">
+                               <span>Download</span>
+                             </div>
+                             <div id="_cancel_" class="ytdownloaderbtn _btn_ _textbtn_">
+                               <span>Cancel</span>
+                             </div>
+                           </div>`
         document.querySelector('ytd-popup-container').appendChild(popup)
         document.querySelector('ytd-popup-container').appendChild(bg)
 
@@ -246,10 +240,10 @@ function HandleYT(videoId, interval) {
                 title = item.qualityLabel + ' (No Audio)'
               }
               popup.querySelector('.formats').innerHTML += `
-            <div class="radio">
-                <input type="radio" name="radio" id="radio-${i}" class="radio__input">
-                <label for="radio-${i}" class="radio__label">${title}</label>
-            </div><br>`
+              <div class="radio">
+                  <input type="radio" name="radio" id="radio-${i}" class="radio__input">
+                  <label for="radio-${i}" class="radio__label">${title}</label>
+              </div><br>`
             }
           }
 

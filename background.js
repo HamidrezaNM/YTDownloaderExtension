@@ -1,25 +1,23 @@
 let activeTabId, lastUrl, lastTitle;
 
 function getTabInfo(tabId) {
-  chrome.tabs.get(tabId, function (tab) {
+  browser.tabs.get(tabId, function (tab) {
     if (lastUrl != tab.url || lastTitle != tab.title) {
-      console.log(lastUrl = tab.url, lastTitle = tab.title);
-
       if (tab.url.match(/youtube.com\/watch\?v=([^&]+)/)) {
-        chrome.tabs.sendMessage(tabId, {
+        browser.tabs.sendMessage(tabId, {
           message: 'youtube_url',
           url: tab.url.match(/youtube.com\/watch\?v=([^&]+)/)[1]
-        })
+        }).catch((error) => console.error(error));
       }
     }
   });
 }
 
-chrome.tabs.onActivated.addListener(function (activeInfo) {
+browser.tabs.onActivated.addListener(function (activeInfo) {
   getTabInfo(activeTabId = activeInfo.tabId);
 });
 
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (activeTabId == tabId) {
     getTabInfo(tabId);
   }

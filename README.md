@@ -1,5 +1,5 @@
 # YTDownloaderExtension
-YouTube Downloader Extension for Chrome and soon for Firefox
+YouTube Downloader Extension for Chrome and Firefox
 
 # Install
 Download CRX file from Releases

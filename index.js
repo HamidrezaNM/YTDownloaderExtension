@@ -1,4 +1,4 @@
-const YoutubeDownloaderAPIURL = 'https://ytdownloader.hmdnjf.repl.co/' // You can change this to your api url
+const YoutubeDownloaderAPIURL = 'https://ytdownloader-api-chi.vercel.app/api/' // You can change this to your api url
 
 const Styles = `
 .ytdownloaderbtn {

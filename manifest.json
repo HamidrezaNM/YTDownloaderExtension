@@ -6,7 +6,7 @@
   "permissions": [
     "tabs",
     "webNavigation",
-    "*://ytdownloader.hmdnjf.repl.co/*"
+    "*://ytdownloader-api-chi.vercel.app/*"
   ],
   "icons": {
     "48": "icons/icon48.png"
